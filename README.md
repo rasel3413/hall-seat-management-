@@ -1,0 +1,2 @@
+# hall-seat-management-
+Django 
