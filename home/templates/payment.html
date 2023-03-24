@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Payment Methods</h1>
+        <p>Please select a payment method:</p>
+        <div class="list-group">
+            <a href="{% url 'payment:paypal' %}" class="list-group-item list-group-item-action">PayPal</a>
+            <a href="{% url 'payment:stripe' %}" class="list-group-item list-group-item-action">Stripe</a>
+            <a href="{% url 'payment:bkash' %}" class="list-group-item list-group-item-action">Bkash</a>
+        </div>
+    </div>
+{% endblock %}

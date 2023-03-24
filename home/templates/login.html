@@ -1,0 +1,125 @@
+<link rel="stylesheet" href="/static/bootstrap.css">
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/fontawesome-free-6.2.0-web/css/all.css">
+<body  style="background-color: #F0FFFF">
+<header class="d-flex justify-content-center pb-5">
+
+ 
+        <div class="container pt-3">
+            <div class="row d-flex justify-content-center ">
+                <div class="col-6 d-flex justify-content-center">
+                    <a href="https://juniv.edu">
+                        <img class="justify-content-center h-auto"src="/static/images/ju_logo.png" style="width: 150px;height: 150px;" alt="Jahangirnagar University"
+                             class="juniv-logo">
+                    </a>
+
+                </div>
+                <div class="class-6 top-contact-info-2">
+                     <a href="/home" class=" pt-5 d-inline-block"><p class="font-weight-bolder h4 focus">Home</p></a>|
+                </div>
+                </div>
+            </div>
+        </div>
+
+</header>
+
+
+<div >
+    <div class=" d-flex justify-content-center pt-5">
+        <form method="post">
+            {% csrf_token %}
+            <!-- Email input -->
+            {% if form.non_field_errors %}
+            {% for message in messages %}
+            <div class="alert alert-danger" role="alert">
+                <h6 style="color: red ;">{{ message }}</h6>
+            </div>
+        {% endfor %}
+            {% endif %}
+            <div class="form-outline mb-4">
+
+                <input type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}"
+                       class="form-control" required/>
+                {% if form.username.errors %}
+                <script>
+               
+                    alert('{{ form.errors }}');
+             
+            </script>
+                {% endif %}
+                <label class="form-label" for="form2Example1">Username</label>
+            </div>
+    
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}"
+                       class="form-control" required/>
+                {% if form.password.errors %}
+                <script>
+               
+                        alert('{{ form.errors }}');
+                 
+                </script>
+                {% endif %}
+                <label class="form-label" for="form2Example2">Password</label>
+            </div>
+    
+            <!-- 2 column grid layout for inline styling -->
+            <div class="row mb-4">
+                <div class="col d-flex justify-content-center">
+                    <!-- Checkbox -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked/>
+                        <label class="form-check-label" for="form2Example31">Remember me </label>
+                    </div>
+                </div>
+    
+                <div class="col">
+                    <!-- Simple link -->
+                    <a href="#!">Forgot password?</a>
+                </div>
+            </div>
+    
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+    
+            <!-- Register buttons -->
+            <div class="text-center">
+                <!-- {% for message in messages %}
+                    <div class="alert alert-dark" role="alert">
+                        <h6>{{ message }}</h6>
+                    </div>
+                {% endfor %} -->
+    
+              
+    
+              
+                <p>or sign up with: </p>
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+    
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-google"></i>
+                </button>
+    
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-twitter"></i>
+                </button>
+    
+                <button type="button" class="btn btn-link btn-floating mx-1">
+                    <i class="fab fa-github"></i>
+                </button>
+            </div>
+    
+        </form>
+    
+    </div>
+    
+</div>
+<footer class="bg-dark text-white p-5" style="position: fixed;bottom: 0%; width: 100%;">
+
+
+
+</footer>
+</body>

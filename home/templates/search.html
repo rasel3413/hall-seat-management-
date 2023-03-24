@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body style="background-color: #F0FFFF">
+
+        <head>
+          <link rel="stylesheet" href="/static/bootstrap.css">
+          <link rel="stylesheet" href="/static/style.css">
+          <link rel="stylesheet" href="/static/fontawesome-free-6.2.0-web/css/all.css">
+      
+          <header class="mb-5">
+      
+      
+            <div class="container-fluid ">
+              <div class="row">
+      
+                <div class="col-lg-4">
+      
+                  <a href="https://juniv.edu">
+                    <img src="/static/images/ju_logo.png" alt="Jahangirnagar University"
+                      style="width: 100px;; height: 150px;" class="ml-5">
+                  </a>
+                </div>
+                <div class="col-lg-8  pt-1 ">
+                  <p class="h1 text-justify font-weight-bolder pt-5 " style="color: green"> Bangabandhu Sheikh Mujibur
+                    Rahman Hall</p>
+      
+                  <div class="text-right h5">
+      
+      
+                    <form action="/home/logut" method="post">
+      
+      
+                      <a href="/home" class="d-inline-block">Home</a> |
+                      {% if request.user.is_active %}
+                      <a href="/home/profile" class="d-inline-block">
+                        <p class="text-capitalize">{{ request.user }}</p>
+                      </a> | {% endif %}
+                      {% if not request.user.is_active %} <a href="/home/login" class="d-inline-block h5">Login</a>
+                      | {% endif %}
+                      {% if request.user.is_active %}
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link">
+                        <p class="h5">logout</p>
+                      </button>
+                    </form>
+                    {% endif %}
+      
+      
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            {#second header#}
+            <div class=" bg-primary bg-dark p-5 text-white pb-3 p-4">
+              <div class="row text-center">
+      
+              </div>
+            </div>
+      
+          </header>
+      
+        </head>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <h2 class="text-center">Search A Student</h2>
+                <form action="" method="post" class="mx-auto">
+                    {% csrf_token %}
+                                    
+                    <div class="form-row">
+                      <div class="col-3">
+                        <div class="form-outline">
+                          <input type="number" id="query" name="query" class="form-control" placeholder="Search by reg_no" style="width: 100%; max-width: 200px;">
+                          <input type="number" id="room_query" name="room_query" class="form-control" placeholder="Search by room" style="width: 100%; max-width: 200px;">
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn">
+                          <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                          <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn2" name="all2">
+                            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                        </button>
+                      </div>
+                      <div class="col-2">
+                        <button type="submit" class="btn btn-secondary" style="width: 100%;" name="all">
+                          Show All
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                  
+                  <script>
+                    var searchBtn = document.getElementById("search-btn");
+                    var queryInput = document.getElementById("query");
+                    
+                  
+                    searchBtn.addEventListener("click", function() {
+                      queryInput.required = true;
+                    });
+                  
+                    // Remove required attribute when Show All button is clicked
+                    var showAllBtn = document.querySelector("button[name='all']");
+                    showAllBtn.addEventListener("click", function() {
+                      queryInput.removeAttribute("required");
+                    });
+
+                    var showAllBtn2 = document.querySelector("button[name='all2']");
+                    showAllBtn2.addEventListener("click", function() {
+                      queryInput.removeAttribute("required");
+                    });
+                  </script>
+
+                {% if not mydata %}
+                    <p>No results found.</p>
+                {% else %}
+                    <table class="table table-dark mx-auto">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">ROOM NO</th>
+                                <th scope="col">Email ID</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Reg_NO</th>
+                                <th scope="col">Batch</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for data in mydata %}
+                                <tr>
+                                    <th scope="row">{{ forloop.counter }}</th>
+                                    <td>{{data.name }}</td>
+                                    <td>{{data.Room_No}}</td>
+                                    <td>{{ data.Email }}</td>
+                                    <td>{{ data.Phone}}</td>
+                                    <td>{{ data.ID_NO}}</td>
+                                    <td>{{ data.Batch}}</td>
+                                    <td><form method="post" action="/home/delete/{{ data.id }}/">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Delete
+                                        </button>
+                                    </form>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

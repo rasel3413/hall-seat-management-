@@ -1,0 +1,116 @@
+<body style="background-color: #F0FFFF">
+
+  <head>
+    <link rel="stylesheet" href="/static/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/fontawesome-free-6.2.0-web/css/all.css">
+
+    <header class="">
+
+
+      <div class="container-fluid ">
+        <div class="row">
+
+          <div class="col-lg-4">
+
+            <a href="https://juniv.edu">
+              <img src="/static/images/ju_logo.png" alt="Jahangirnagar University"
+                style="width: 100px;; height: 150px;" class="ml-5">
+            </a>
+          </div>
+          <div class="col-lg-8  pt-1 ">
+            <p class="h1 text-justify font-weight-bolder pt-5 " style="color: green"> Bangabandhu Sheikh Mujibur
+              Rahman Hall</p>
+
+            <div class="text-right h5">
+
+
+              <form action="/home/logut" method="post">
+
+
+                <a href="/home" class="d-inline-block">Home</a> |
+                {% if request.user.is_active %}
+                <a href="/home/profile" class="d-inline-block">
+                  <p class="text-capitalize">{{ request.user }}</p>
+                </a> | {% endif %}
+                {% if not request.user.is_active %} <a href="/home/login" class="d-inline-block h5">Login</a>
+                | {% endif %}
+                {% if request.user.is_active %}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link">
+                  <p class="h5">logout</p>
+                </button>
+              </form>
+              {% endif %}
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      {#second header#}
+      <div class=" bg-primary bg-dark p-5 text-white pb-3 p-4">
+        <div class="row text-center">
+
+        </div>
+      </div>
+
+    </header>
+
+  </head>
+  <div class="container">
+    <h1>Complaints</h1>
+    <form method="GET">
+      <div class="form-group">
+        <label for="month">Select Month:</label>
+        <select class="form-control" id="month" name="month">
+          <option value="">--Select Month--</option>
+          <option value="01">January</option>
+          <option value="02">February</option>
+          <option value="03">March</option>
+          <option value="04">April</option>
+          <option value="05">May</option>
+          <option value="06">June</option>
+          <option value="07">July</option>
+          <option value="08">August</option>
+          <option value="09">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+    <br>
+    <div class="container">
+      <h1>Complaints</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Room No.</th>
+            <th>Complaint</th>
+            <th>Is Solved?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for complaint in complaints %}
+          <tr>
+            <td> {{ complaint.created_at|date:"d-m-Y" }}</td>
+            <td>{{ complaint.room_no }}</td>
+            <td>{{ complaint.complaint }}</td>
+            <td>{% if complaint.is_solved %}Solved{% else %}Unsolved{% endif %}</td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="4">No complaints found</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
