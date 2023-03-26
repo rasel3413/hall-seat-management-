@@ -61,9 +61,7 @@
                     <a class="nav-link navbar-light  " href="/home/complain">
                         <h6>Complain </h6>
                     </a>
-                    <a class="nav-link navbar-light  " href="#">
-                        <h6>Payment </h6>
-                    </a>
+                   
 
                     {% endif %}
 
@@ -83,11 +81,12 @@
                         <h6>Search a student </h6>
                     </a>
                     {% endif %}
+                  
                     {% if request.user.is_active and not request.user.is_superuser%}
                     <a class="nav-link navbar-light  " href="#">
-                        <h6>My complains </h6>
+                        <h6>Payment </h6>
                     </a>
-                    {% endif %}
+                    {%endif%}
                 </div>
                 <div class="  col-2" style="display: flex; justify-content: space-between;">
                     <!-- <a class="nav-link navbar-light  " href="/home/complaints"></a> -->
@@ -125,6 +124,9 @@
                         </ul>
                     </div>
                     {% endif %}
+
+                   
+
                 </div>
                 <div class="  col-2" style="display: flex; justify-content: space-between;">
                     {% if request.user.is_superuser %}

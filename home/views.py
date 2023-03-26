@@ -26,9 +26,11 @@ def home(request):
     complaints = Complain.objects.all()
     cnt= Complain.objects.filter(is_solved=False)
     nws=News.objects.all()
+    evnt=Events.objects.all()
+    notice=Notice.objects.all()
     
 
-    return render(request, 'base.html',{'complaints': complaints ,'cnt':cnt,'nws':nws})
+    return render(request, 'base.html',{'complaints': complaints ,'cnt':cnt,'nws':nws,'evnt':evnt,'notice':notice})
 
 
 
@@ -190,5 +192,29 @@ class NewsCreateView(CreateView):
 
 class NewsDeleteView(DeleteView):
     model = News
+    template_name = 'base.html'
+    success_url = reverse_lazy('index')
+
+
+class EventsCreateView(CreateView):
+    model = Events
+    fields = ['events']
+    template_name = 'create_events.html'
+    success_url = reverse_lazy('index')
+
+class EventsDeleteView(DeleteView):
+    model = Events
+    template_name = 'base.html'
+    success_url = reverse_lazy('index')
+
+
+class NoticeCreateView(CreateView):
+    model = Notice
+    fields = ['notice']
+    template_name = 'create_notice.html'
+    success_url = reverse_lazy('index')
+
+class NoticeDeleteView(DeleteView):
+    model = Notice
     template_name = 'base.html'
     success_url = reverse_lazy('index')

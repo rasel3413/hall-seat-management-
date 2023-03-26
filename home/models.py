@@ -49,6 +49,13 @@ class News (models.Model):
     def __str__(self):
         return  self.news
 
+class Events (models.Model):
+    events=models.CharField(max_length=255)
+    def __str__(self):
+        return  self.events
 
 
-
+class Notice (models.Model):
+    notice=models.CharField(max_length=255)
+    def __str__(self):
+        return  self.notice

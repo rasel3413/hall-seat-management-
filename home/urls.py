@@ -18,8 +18,12 @@ urlpatterns = [
  
     
     path('create_news/', views.NewsCreateView.as_view(), name='create_news'),
+    path('create_events/', views.EventsCreateView.as_view(), name='create_events'),
     
     path('news/<int:pk>/delete/', views.NewsDeleteView.as_view(), name='delete_news'),
+    path('events/<int:pk>/delete/', views.EventsDeleteView.as_view(), name='delete_events'),
+    path('create_notice/', views.NoticeCreateView.as_view(), name='create_notice'),
+    path('notice/<int:pk>/delete/', views.NoticeDeleteView.as_view(), name='delete_notice'),
 
 
  

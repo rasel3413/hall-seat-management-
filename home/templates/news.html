@@ -5,10 +5,21 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-header bg-dark text-white ">Notices</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.
-                        </p>
+                        
+                        {% for notice in notice %}
+                        <ul>
+                           <li> {{notice}}</li>
+                           <form action="{% url 'delete_notice' pk=notice.pk %}" method="post">
+                            {% csrf_token %}
+                            {% if request.user.is_superuser %}
+                            <input type="submit" value="Delete">
+                            {% endif %}
+                          </form>
+                        </ul>
+                        {% endfor %}
                         {% if request.user.is_superuser %}
-                        <button class="button btn-block bg-primary text-white">Add </button>
+                        
+                        <button class="button btn-block bg-primary text-white"><a class="nav-link navbar-light hover:bg-dark  " href="{% url 'create_notice' %}">Add</a> </button>
                         {% endif %}
 
                     </div>
@@ -18,20 +29,22 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-header bg-dark text-white ">Events</h5>
-                        <p class="card-text">
-                            {% for news in news_list %}
-                            <ol>
-                            
-                                {{news.news}}
-                            </ol>
-                           {%  endfor %}
-                            
-                           
- 
-                        </p>
+                        {% for events in evnt %}
+                        <ul>
+                           <li> {{events}}</li>
+                           <form action="{% url 'delete_events' pk=events.pk %}" method="post">
+                            {% csrf_token %}
+                            {% if request.user.is_superuser %}
+                            <input type="submit" value="Delete">
+                            {% endif %}
+                          </form>
+                        </ul>
+                        {% endfor %}
                         {% if request.user.is_superuser %}
-                        <button class="button btn-block bg-primary text-white">Add </button>
+                        
+                        <button class="button btn-block bg-primary text-white"><a class="nav-link navbar-light hover:bg-dark  " href="{% url 'create_events' %}">Add</a> </button>
                         {% endif %}
+                      
                     </div>
                 </div>
 
