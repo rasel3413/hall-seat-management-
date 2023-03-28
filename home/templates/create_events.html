@@ -1,6 +1,21 @@
-<h2>Create Events</h2>
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Create</button>
-</form>
+{%include "base_header.html" %}
+<body style="background-color: #F0FFFF"></body>
+<br>
+<br>
+<div class="d-flex justify-content-center align-items-center vh-50">
+  <div class="col-md-6">
+    <h2 class="text-center mb-4">Create Events</h2>
+    <form method="POST" class="form-horizontal">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="id_events" class="control-label">Events:</label>
+        <div class="input-group">
+          <input type="text" name="events" id="id_events" class="form-control form-control-lg" style="height: 80px;" required>
+        </div>
+      </div>
+      <div class="form-group text-left">
+        <button type="submit" class="btn btn-primary px-4" style="margin-left: 0px;">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
