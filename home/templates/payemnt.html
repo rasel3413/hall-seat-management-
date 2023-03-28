@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Payment Page</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Payment Page</h1>
+		<form>
+			<!-- Payment Method Section -->
+			<div class="form-group">
+				<label>Payment Method:</label>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="payment-method" id="paypal" value="paypal" checked>
+					<label class="form-check-label" for="paypal">
+						<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/logo_paypal_150x38.png" alt="PayPal">
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="payment-method" id="visa" value="visa">
+					<label class="form-check-label" for="visa">
+						<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-large.png" alt="Visa">
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="payment-method" id="mastercard" value="mastercard">
+					<label class="form-check-label" for="mastercard">
+						<img src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/buy-logo-large.png" alt="Mastercard">
+					</label>
+				</div>
+			</div>
+			<!-- End Payment Method Section -->
+
+			<!-- Submit Button -->
+			<button type="submit" class="btn btn-primary">Submit Payment</button>
+			<!-- End Submit Button -->
+		</form>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"
+		integrity="sha384-5U6wItHoLmPMkVas9XO9ifA6bmGmGLFIdzzV7mcdZQaMam7yyHQIE1+Bg7Vfmd/t"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

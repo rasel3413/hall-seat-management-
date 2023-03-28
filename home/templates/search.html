@@ -2,65 +2,8 @@
 <html lang="en">
     <body style="background-color: #F0FFFF">
 
-        <head>
-          <link rel="stylesheet" href="/static/bootstrap.css">
-          <link rel="stylesheet" href="/static/style.css">
-          <link rel="stylesheet" href="/static/fontawesome-free-6.2.0-web/css/all.css">
-      
-          <header class="mb-5">
-      
-      
-            <div class="container-fluid ">
-              <div class="row">
-      
-                <div class="col-lg-4">
-      
-                  <a href="https://juniv.edu">
-                    <img src="/static/images/ju_logo.png" alt="Jahangirnagar University"
-                      style="width: 100px;; height: 150px;" class="ml-5">
-                  </a>
-                </div>
-                <div class="col-lg-8  pt-1 ">
-                  <p class="h1 text-justify font-weight-bolder pt-5 " style="color: green"> Bangabandhu Sheikh Mujibur
-                    Rahman Hall</p>
-      
-                  <div class="text-right h5">
-      
-      
-                    <form action="/home/logut" method="post">
-      
-      
-                      <a href="/home" class="d-inline-block">Home</a> |
-                      {% if request.user.is_active %}
-                      <a href="/home/profile" class="d-inline-block">
-                        <p class="text-capitalize">{{ request.user }}</p>
-                      </a> | {% endif %}
-                      {% if not request.user.is_active %} <a href="/home/login" class="d-inline-block h5">Login</a>
-                      | {% endif %}
-                      {% if request.user.is_active %}
-                      {% csrf_token %}
-                      <button type="submit" class="btn btn-link">
-                        <p class="h5">logout</p>
-                      </button>
-                    </form>
-                    {% endif %}
-      
-      
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-            {#second header#}
-            <div class=" bg-primary bg-dark p-5 text-white pb-3 p-4">
-              <div class="row text-center">
-      
-              </div>
-            </div>
-      
-          </header>
-      
-        </head>
+      {%include "base_header.html" %}
+      <br>
 
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -73,14 +16,15 @@
                       <div class="col-3">
                         <div class="form-outline">
                           <input type="number" id="query" name="query" class="form-control" placeholder="Search by reg_no or Batch_nO" style="width: 100%; max-width: 200px;">
+                          <br>
                           <input type="number" id="room_query" name="room_query" class="form-control" placeholder="Search by room_no" style="width: 100%; max-width: 200px;">
                         </div>
                       </div>
-                      <div class="col-1">
+                      <div class="col-1" style="display: flex; flex-direction: column; gap: 25px;">
                         <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn">
                           <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
                           <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn2" name="all2">
-                            <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                        <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
                         </button>
                       </div>
                       <div class="col-2">
@@ -111,7 +55,7 @@
                       queryInput.removeAttribute("required");
                     });
                   </script>
-
+<br>
                 {% if not mydata %}
                     <p>No results found.</p>
                 {% else %}
