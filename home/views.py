@@ -218,3 +218,5 @@ class NoticeDeleteView(DeleteView):
     model = Notice
     template_name = 'base.html'
     success_url = reverse_lazy('index')
+class PaymentPageView(TemplateView):
+    template_name = 'payment.html'

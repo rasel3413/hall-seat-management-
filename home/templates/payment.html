@@ -1,13 +1,147 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 
-{% block content %}
+<head>
+    {%include "base_header.html" %}
+    <br>
+
+<body style="background-color: #F0FFFF">
+    <title>Student Fee System for Hall</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
     <div class="container">
-        <h1>Payment Methods</h1>
-        <p>Please select a payment method:</p>
-        <div class="list-group">
-            <a href="{% url 'payment:paypal' %}" class="list-group-item list-group-item-action">PayPal</a>
-            <a href="{% url 'payment:stripe' %}" class="list-group-item list-group-item-action">Stripe</a>
-            <a href="{% url 'payment:bkash' %}" class="list-group-item list-group-item-action">Bkash</a>
+        <h1>Student Fee System for Hall</h1>
+        <form>
+            <div class="form-group">
+                <label for="name">Transaction Id:</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Transaction Id">
+            </div>
+            <div class="form-group">
+                <label for="months-from">Months From:</label>
+                <select class="form-control" id="months-from">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="months-to">Months To:</label>
+                <select class="form-control" id="months-to">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" class="form-control
+                " id="amount" placeholder="Amount" readonly>
+            </div>
+            <!-- <div class="form-group">
+                <label for="payment-method">Payment Method:</label>
+                <select class="form-control" id="payment-method">
+                    <option>Rocket</option>
+                    <option>Bikash</option>
+                    <option>Nagad</option>
+                </select>
+            </div> -->
+
+        </form>
+    </div>
+    
+    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
+        <div class="card" style="cursor: pointer;">
+            <img src="/static/images/bkash.png" class="card-img-top img-thumbnail" alt="..." style="max-width: 100px; max-height: 100px;">
+        </div>
+        <div class="card" style="cursor: pointer;">
+            <img src="/static/images/nogod.png" class="card-img-top img-thumbnail" alt="..." style="max-width: 100px; max-height: 100px;">
+        </div>
+        <div class="card" style="cursor: pointer;">
+            <img src="/static/images/upay.png" class="card-img-top img-thumbnail" alt="..." style="max-width: 100px; max-height: 100px;">
         </div>
     </div>
-{% endblock %}
+    
+    
+    <script>
+        $(document).ready(function () {
+            // calculate amount when months from and months to fields are changed
+            $("#months-from, #months-to").on("change", function () {
+                var monthsFrom = parseInt($("#months-from").val());
+                var monthsTo = parseInt($("#months-to").val());
+
+                // calculating number of months
+                var numberOfMonths = getNumberOfMonths(monthsFrom, monthsTo);
+
+                // calculating amount
+                var amount = numberOfMonths * 50;
+                $("#amount").val(amount);
+            });
+
+            // submit form
+            $("form").submit(function () {
+                // sending data to server for payment
+                var name = $("#name").val();
+                var email = $("#email").val();
+                var paymentMethod = $("#payment-method").val();
+                var monthsFrom = $("#months-from option:selected").text();
+                var monthsTo = $("#months-to option:selected").text();
+                var amount = $("#amount").val();
+                var data = {
+                    name: name,
+                    email: email,
+                    monthsFrom: monthsFrom,
+                    monthsTo: monthsTo,
+                    paymentMethod: paymentMethod,
+                    amount: amount
+                };
+                $.post("payment.php", data, function (result) {
+                    alert(result);
+                });
+                return false;
+            });
+
+            function getNumberOfMonths(monthsFrom, monthsTo) {
+                var numberOfMonths = 0;
+                if (monthsTo > monthsFrom) {
+                    numberOfMonths = monthsTo - monthsFrom + 1;
+                } else if (monthsTo < monthsFrom) {
+                    numberOfMonths = 12 - monthsFrom + monthsTo + 1;
+                } else {
+                    numberOfMonths = 1;
+                }
+                return numberOfMonths;
+            }
+        });
+    </script>
+</body>
+
+</html>

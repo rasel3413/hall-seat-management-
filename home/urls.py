@@ -24,7 +24,7 @@ urlpatterns = [
     path('events/<int:pk>/delete/', views.EventsDeleteView.as_view(), name='delete_events'),
     path('create_notice/', views.NoticeCreateView.as_view(), name='create_notice'),
     path('notice/<int:pk>/delete/', views.NoticeDeleteView.as_view(), name='delete_notice'),
-
+    path('payment', views.PaymentPageView.as_view(), name='payment'),
 
  
 ]
