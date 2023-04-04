@@ -1,0 +1,48 @@
+{% include "base_header.html" %}
+
+{% block content %}
+<body style="background-color: #F0FFFF">
+  <div class="container mt-5">
+    <h2>Unsolved Complaints</h2>
+    <div class="table-responsive mt-3">
+      <table class="table table-dark mx-auto table-hover">
+        <thead >
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Registration No.</th>
+            <th scope="col">Room No.</th>
+            <th scope="col">Complaint</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for complaint in complaints %}
+            {% if not complaint.is_solved %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ complaint.name }}</td>
+                <td>{{ complaint.registration_no }}</td>
+                <td>{{ complaint.room_no }}</td>
+                <td>{{ complaint.complaint }}</td>
+                <td>
+                  <form action="{% url 'mark_as_solved' complaint.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Mark as Solved</button>
+                  </form>
+                </td>
+              </tr>
+            {% endif %}
+          {% empty %}
+            <tr>
+              <td colspan="5">No unsolved complaints found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+</body>
+
+{% endblock %}

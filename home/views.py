@@ -15,6 +15,7 @@ from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from .models import *
+from .forms import *
 from django.db.models import Q,Count
 
 
@@ -34,8 +35,6 @@ def home(request):
 
 
 
-@login_required(login_url="/home/login")
-@allowed_users(allowed_role=['admin'])
 def signup_view(request):
     taken_rooms = UserProfile.objects.filter(Room_No__isnull=False).values_list('Room_No__roomNo', 'Room_No__seat')
     available_rooms = RoomNumber.objects.exclude(roomNo__in=[room[0] for room in taken_rooms], seat__in=[room[1] for room in taken_rooms])
@@ -66,7 +65,7 @@ def signup_view(request):
     return render(request, 'signup.html', {'form': form,'trop':trop,'Rooms':available_rooms})
 
 
-@unauthenticated_user
+
 def login_view(request):
     if request.method == 'POST':
         form=AuthenticationForm(data=request.POST)
@@ -93,8 +92,7 @@ def logut_view(request):
         return redirect('/home/login')
 
 
-@login_required(login_url="/home/login")
-@allowed_users(allowed_role=['helper'])
+
 def user_prof(request):
 
     name = request.user.userprofile.name
@@ -115,11 +113,18 @@ def user_prof(request):
 class SearchView(TemplateView):
     template_name = 'search.html'
 
+    
+  
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['mydata'] = []
-        return context
+        taken_rooms = UserProfile.objects.filter(Room_No__isnull=False).values_list('Room_No__roomNo', 'Room_No__seat')
+        
+        available_rooms = RoomNumber.objects.exclude(roomNo__in=[room[0] for room in taken_rooms], seat__in=[room[1] for room in taken_rooms])
 
+        context['available_rooms'] = available_rooms
+        mydata = UserProfile.objects.all()
+        context['mydata'] = mydata
+        return context
     def post(self, request, *args, **kwargs):
         query = request.POST.get('query')
         rquery = request.POST.get('room_query')
@@ -132,7 +137,11 @@ class SearchView(TemplateView):
             mydata = UserProfile.objects.filter(Q(ID_NO=query) | Q(Batch=query))
         else:
             mydata = UserProfile.objects.all()
-        context = {'mydata': mydata}
+        taken_rooms = UserProfile.objects.filter(Room_No__isnull=False).values_list('Room_No__roomNo', 'Room_No__seat')
+        available_rooms = RoomNumber.objects.exclude(roomNo__in=[room[0] for room in taken_rooms], seat__in=[room[1] for room in taken_rooms])
+
+
+        context = {'mydata': mydata,'available_rooms':available_rooms }
         return render(request, 'search.html', context)
 
 
@@ -220,3 +229,40 @@ class NoticeDeleteView(DeleteView):
     success_url = reverse_lazy('index')
 class PaymentPageView(TemplateView):
     template_name = 'payment.html'
+
+def show_complaints(request):
+    complaints = Complain.objects.filter(is_solved=False)
+    context = {
+        'complaints': complaints
+    }
+    return render(request, 'show_Unsolved_complain.html', context)
+
+
+class MarkAsSolvedView(UpdateView):
+    model = Complain
+    fields = []
+    success_url = reverse_lazy('show_complaints')
+
+    def form_valid(self, form):
+        # set is_solved to True when the form is submitted
+        self.object = form.save(commit=False)
+        self.object.is_solved = True
+        self.object.save()
+        return redirect(self.success_url)
+def update_room(request, id):
+    user_profile = UserProfile.objects.get(id=id)
+    room_id = request.POST.get('room')
+    if room_id:
+        room = RoomNumber.objects.get(id=room_id)
+        user_profile.Room_No = room
+        user_profile.save()
+    return redirect('search')
+
+
+def update_room(request, pk):
+    user = UserProfile.objects.get(pk=pk)
+    new_room_id = request.POST.get('room_number')
+    new_room = RoomNumber.objects.get(pk=new_room_id)
+    user.Room_No = new_room
+    user.save()
+    return redirect('search')

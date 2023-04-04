@@ -1,100 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-    <body style="background-color: #F0FFFF">
 
-      {%include "base_header.html" %}
-      <br>
+<body style="background-color: #F0FFFF">
 
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-8 col-lg-6">
-                <h2 class="text-center">Search A Student</h2>
-                <form action="" method="post" class="mx-auto">
-                    {% csrf_token %}
-                                    
-                    <div class="form-row">
-                      <div class="col-3">
-                        <div class="form-outline">
-                          <input type="number" id="query" name="query" class="form-control" placeholder="by reg_no or Batch_no" style="width: 100%; max-width: 200px;">
-                          <br>
-                          <input type="number" id="room_query" name="room_query" class="form-control" placeholder="Search by room_no" style="width: 100%; max-width: 200px;">
-                        </div>
-                      </div>
-                      <div class="col-1" style="display: flex; flex-direction: column; gap: 25px;">
-                        <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn">
-                          <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-                          <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn2" name="all2">
-                        <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
-                        </button>
-                      </div>
-                      <div class="col-2">
-                        <button type="submit" class="btn btn-secondary" style="width: 100%;" name="all">
-                          Show All
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                  
-                  <script>
-                    var searchBtn = document.getElementById("search-btn");
-                    var queryInput = document.getElementById("query");
-                    
-                  
-                    searchBtn.addEventListener("click", function() {
-                      queryInput.required = true;
-                    });
-                  
-                    // Remove required attribute when Show All button is clicked
-                    var showAllBtn = document.querySelector("button[name='all']");
-                    showAllBtn.addEventListener("click", function() {
-                      queryInput.removeAttribute("required");
-                    });
+  {%include "base_header.html" %}
+  <br>
 
-                    var showAllBtn2 = document.querySelector("button[name='all2']");
-                    showAllBtn2.addEventListener("click", function() {
-                      queryInput.removeAttribute("required");
-                    });
-                  </script>
-<br>
-                {% if not mydata %}
-                    <p>No results found.</p>
-                {% else %}
-                    <table class="table table-dark mx-auto">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">ROOM NO</th>
-                                <th scope="col">Email ID</th>
-                                <th scope="col">Phone</th>
-                                <th scope="col">Reg_NO</th>
-                                <th scope="col">Batch</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for data in mydata %}
-                                <tr>
-                                    <th scope="row">{{ forloop.counter }}</th>
-                                    <td>{{data.name }}</td>
-                                    <td>{{data.Room_No}}</td>
-                                    <td>{{ data.Email }}</td>
-                                    <td>{{ data.Phone}}</td>
-                                    <td>{{ data.ID_NO}}</td>
-                                    <td>{{ data.Batch}}</td>
-                                    <td><form method="post" action="/home/delete/{{ data.id }}/">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger btn-sm">
-                                            <i class="fas fa-trash-alt"></i> Delete
-                                        </button>
-                                    </form>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-md-8 col-lg-6">
+        <h2 class="text-center">Search A Student</h2>
+        <form action="" method="post" class="mx-auto">
+          {% csrf_token %}
+
+          <div class="form-row">
+            <div class="col-3">
+              <div class="form-outline">
+                <input type="number" id="query" name="query" class="form-control" placeholder="by reg_no or Batch_no"
+                  style="width: 100%; max-width: 200px;">
+                <br>
+                <input type="number" id="room_query" name="room_query" class="form-control"
+                  placeholder="Search by room_no" style="width: 100%; max-width: 200px;">
+              </div>
             </div>
-        </div>
+            <div class="col-1" style="display: flex; flex-direction: column; gap: 25px;">
+              <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn">
+                <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                <button type="submit" class="btn btn-primary" style="width: 100%;" id="search-btn2" name="all2">
+                  <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                </button>
+            </div>
+            <div class="col-2">
+              <button type="submit" class="btn btn-secondary" style="width: 100%;" name="all">
+                Show All
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <script>
+          var searchBtn = document.getElementById("search-btn");
+          var queryInput = document.getElementById("query");
+
+
+          searchBtn.addEventListener("click", function () {
+            queryInput.required = true;
+          });
+
+          // Remove required attribute when Show All button is clicked
+          var showAllBtn = document.querySelector("button[name='all']");
+          showAllBtn.addEventListener("click", function () {
+            queryInput.removeAttribute("required");
+          });
+
+          var showAllBtn2 = document.querySelector("button[name='all2']");
+          showAllBtn2.addEventListener("click", function () {
+            queryInput.removeAttribute("required");
+          });
+        </script>
+        <br>
+        {% if not mydata %}
+        <p>No results found.</p>
+      {% else %}
+        <table class="table table-dark mx-auto">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">ROOM NO</th>
+              <th scope="col">Email ID</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Reg_NO</th>
+              <th scope="col">Batch</th>
+              <th scope="col">Update Room</th> <!-- new column for form -->
+            </tr>
+          </thead>
+          <tbody>
+            {% for data in mydata %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ data.name }}</td>
+                <td>{{ data.Room_No}}</td>
+                <td>{{ data.Phone }}</td>
+                <td>{{ data.Email }}</td>
+                <td>{{ data.ID_NO }}</td>
+                <td>{{ data.Batch }}</td>
+                <td>
+                  <form method="POST" action="{% url 'update_room' data.id %}">
+                      {% csrf_token %}
+                      <div class="form-row align-items-center">
+                          <div class="col-6">
+                              <select name="room_number" class="form-control" style="max-width: 150px;">
+                                  {% for room in available_rooms %}
+                                      <option value="{{ room.id }}">{{ room.roomNo }}-   {{room.seat}}</option>
+                                  {% endfor %}
+                              </select>
+                          </div>
+                          <div class="col-6">
+                              <button type="submit" class="btn btn-primary">Update</button>
+                          </div>
+                      </div>
+                  </form>
+              </td>
+              
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+      
+      </div>
     </div>
-</body>
+  </div>
+
+
 </html>

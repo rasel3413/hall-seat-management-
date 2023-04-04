@@ -16,3 +16,8 @@ class profFrom(ModelForm):
         fields='__all__'
     
         exclude=['user']
+
+class ComplainForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ['is_solved']

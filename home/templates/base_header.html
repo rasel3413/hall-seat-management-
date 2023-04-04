@@ -1,11 +1,10 @@
-
 <head>
     <link rel="stylesheet" href="/static/bootstrap.css">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="stylesheet" href="/static/fontawesome-free-6.2.0-web/css/all.css">
 
     <header class="">
-        
+
 
         <div class="container-fluid ">
             <div class="row">
@@ -21,29 +20,27 @@
                         Rahman Hall</p>
 
                     <div class="text-right h5">
-
-
-                        <form action="/home/logut" method="post">
-
-
-                            <a href="/home" class="d-inline-block">Home</a> |
+                        <form action="{% url 'logut' %}" method="post">
+                            <a href="{% url 'index' %}" class="d-inline-block"><i class="fas fa-home"></i> Home</a> |
                             {% if request.user.is_active %}
-                            <a href="/home/profile" class="d-inline-block">
-                                <p class="text-capitalize">{{ request.user }}</p>
-                            </a> | {% endif %}
-                            {% if not request.user.is_active %} <a href="/home/login"
-                                class="d-inline-block h5">Login</a>
-                            | {% endif %}
+                            <a href="{% url 'profile' %}" class="d-inline-block">
+                                <p class="text-capitalize"><i class="fas fa-user"></i> {{ request.user }}</p>
+                            </a> |
+                            {% endif %}
+                            {% if not request.user.is_active %}
+                            <a href="{% url 'login' %}" class="d-inline-block h5"><i class="fas fa-sign-in-alt"></i>
+                                Login</a> |
+                            {% endif %}
                             {% if request.user.is_active %}
                             {% csrf_token %}
                             <button type="submit" class="btn btn-link">
-                                <p class="h5">logout</p>
+                                <p class="h5"><i class="fas fa-sign-out-alt"></i> Logout</p>
                             </button>
+                            {% endif %}
                         </form>
-                        {% endif %}
-
-
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -52,93 +49,57 @@
         <div class=" bg-primary bg-dark p-5 text-white pb-3 p-4">
             <div class="row text-center">
                 {% if request.user.is_active and not request.user.is_superuser%}
-                <div class="col-3"style="display: flex; justify-content: space-between;">
-                <!-- add your HTML code here for users in the specific group -->
-                <a class="nav-link navbar-light  " href="/home/profile">
-                    <h6>Profile </h6>
-                </a>
-                <a class="nav-link navbar-light  " href="/home/payment">
-                    <h6>Payment </h6>
-                </a>
-                <a class="nav-link navbar-light  " href="/home/complain">
-                    <h6>Complain </h6>
-                </a>
-
-            </div>
+                <div class="col-3" style="display: flex; justify-content: space-between;">
+                    <!-- add your HTML code here for users in the specific group -->
+                    <a class="nav-link navbar-light" href="/home/profile">
+                        <h5><i class="fas fa-user"></i> Profile</h5>
+                    </a>
+                    <a class="nav-link navbar-light" href="/home/payment">
+                        <h5><i class="fas fa-money-check-alt"></i> Payment</h5>
+                    </a>
+                    <a class="nav-link navbar-light" href="/home/make_complain">
+                        <h5><i class="fas fa-exclamation-triangle"></i> Complain</h5>
+                    </a>
+                </div>
                 {% endif %}
 
 
-
                 {% if request.user.is_superuser %}
-
-                <div class="  col-2" style="display: flex; justify-content: space-between;">
-
-                  
-                    <a class="nav-link navbar-light  " href="/home/signup">
-                        <h6>Register a student </h6>
-                    </a>
-
-                    {% endif %}
-                </div>
-                <div class="  col-2" style="display: flex; justify-content: space-between;">
-                    {% if request.user.is_superuser %}
-
-                    <a class="nav-link navbar-light  " href="/home/search">
-                        <h6>Search a student </h6>
-                    </a>
-                    {% endif %}
-                  
+                <div class="col-2" style="display: flex; justify-content: space-between;">
+                  <a class="nav-link navbar-light" href="/home/signup">
                    
+                    <h6> <i class="fas fa-user-plus"></i> Register a student</h6>
+                  </a>
                 </div>
-                <div class="  col-2" style="display: flex; justify-content: space-between;">
-                    <!-- <a class="nav-link navbar-light  " href="/home/complaints"></a> -->
-                    {% if request.user.is_superuser %}
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            See complaints
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                           
-                          
-                            {%if cnt %}
-
-
-                            {% for complaint in complaints %}
-                                {% if not complaint.is_solved %}
-                                    <li><a href="#">room:{{ complaint.room_no}} : {{complaint.complaint}} </a></li>
-                                    <a href="{% url 'complaint_solve' pk=complaint.pk %}" class="btn btn-success">Mark as Solved</a>
-                                {% else %}
-                                  
-                                {% endif %}
-                            {% endfor %}
-                           
-                            {%else%}
-                            <li>No complaints found.</li>
-
-                           {%endif%}                          
-                         
-                         
-
-                          
-                           
-
-                        </ul>
-                    </div>
-                    {% endif %}
-
-                 
+                {% endif %}
+                
+                <div class="col-2" style="display: flex; justify-content: space-between;">
+                  {% if request.user.is_superuser %}
+                  <a class="nav-link navbar-light" href="/home/search">
+                  
+                    <h6>  <i class="fas fa-search"></i> Student Info</h6>
+                  </a>
+                  {% endif %}
+                </div>
+                
+                <div class="col-2" style="display: flex; justify-content: space-between;">
+                  {% if request.user.is_superuser %}
+                  <a class="nav-link navbar-light" href="/home/complain">
                    
-
+                    <h6> <i class="fas fa-exclamation-circle"></i> See Complains</h6>
+                  </a>
+                  {% endif %}
                 </div>
-                <div class="  col-2" style="display: flex; justify-content: space-between;">
-                    {% if request.user.is_superuser %}
-                    <a class="nav-link navbar-light  " href="/home/report">
-                        <h6>Monthly report </h6>
-                    </a>
-                    {% endif %}
-
+                
+                <div class="col-2" style="display: flex; justify-content: space-between;">
+                  {% if request.user.is_superuser %}
+                  <a class="nav-link navbar-light" href="/home/report">
+                   
+                    <h6> <i class="far fa-file-alt"></i> Monthly report</h6>
+                  </a>
+                  {% endif %}
                 </div>
+                
 
             </div>
         </div>
