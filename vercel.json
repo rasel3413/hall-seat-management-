@@ -13,15 +13,5 @@
     "distDir": "staticfiles_build"
      }
     }
-    ],
-    "routes": [
-    {
-    "src": "home/static/(.*)",
-    "dest": "home/static/$1"
-    },
-    {
-    "src": "/(.*)",
-    "dest": "home_page/wsgi.py"
-    }
     ]
     }
