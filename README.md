@@ -1,2 +1,2 @@
-# hall-seat-management-
+# hall-seat-management
 Django 
